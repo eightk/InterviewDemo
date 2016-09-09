@@ -49,15 +49,11 @@ public class BinaryTreeHandler {
     }
 
     public static int getTreeDepth(BinaryTreeNode root) {
-        return getLongestPathNodeNumber(root) - 1;
-    }
-
-    private static int getLongestPathNodeNumber(BinaryTreeNode root) {
-        if (root == null) {
+        if (root == null || (root.getLeft() == null && root.getRight() == null)) {
             return 0;
         }
-        int leftHeight = getLongestPathNodeNumber(root.getLeft());
-        int rightHeight = getLongestPathNodeNumber(root.getRight());
+        int leftHeight = getTreeDepth(root.getLeft());
+        int rightHeight = getTreeDepth(root.getRight());
 
         if (leftHeight > rightHeight) {
             return leftHeight + 1;
@@ -150,14 +146,14 @@ public class BinaryTreeHandler {
         }
         return root;
     }
-    
+
     public static BinaryTreeNode rotateRight(BinaryTreeNode root) {
         BinaryTreeNode newRoot = root.getLeft();
         root.setLeft(newRoot.getRight());
         newRoot.setRight(root);
         return newRoot;
     }
-    
+
     public static BinaryTreeNode rotateLeft(BinaryTreeNode root) {
         BinaryTreeNode newRoot = root.getRight();
         root.setRight(newRoot.getLeft());
