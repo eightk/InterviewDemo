@@ -22,18 +22,19 @@ public class StudentAggregation {
     public static void main(String[] args) {
         String srcFile = new File(".").getAbsolutePath() + "\\testSample.txt";
         String dstFile = new File(".").getAbsolutePath() + "\\resultSample.txt";
+        
+        // Initialize the LoggingUtils
+        LoggingUtils.initializeLogger();
         // try opening the source and destination file
-        // with FileReader and FileWriter
+        // with BufferedInputSteam and BufferedOutputStream
+        // try-with-resources will automatically release FileReader object these two objects
         try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(srcFile));
                 BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(dstFile))) {
-            new StudentAggregationDriver().aggregateRecords(in, out);
+            StudentAggregationDriver.getDefault().aggregateRecords(in, out);
         } catch (FileNotFoundException fnfe) {
-            // the passed file is not found ...
-            System.err.println("Cannot open the file " + fnfe.getMessage());
+            LoggingUtils.logError(fnfe, "Cannot open file: " + fnfe.getMessage());
         } catch (IOException ioe) {
-            // some IO error occurred when reading the file ...
-            System.err.printf("Error when processing file; exiting ... ");
+            LoggingUtils.logError(ioe, ioe.getMessage());
         }
-        // try-with-resources will automatically release FileReader object
     }
 }

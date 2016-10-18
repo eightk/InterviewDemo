@@ -17,6 +17,10 @@ import java.util.Map;
  */
 public class StudentAggregationDriver extends AbstractAggregationDriver {
 
+    public static StudentAggregationDriver getDefault() {
+        return new StudentAggregationDriver();
+    }
+    
     @Override
     public void aggregateRecords(InputStream in, OutputStream out) throws IOException {
         int ch = 0;//characters to read
@@ -26,7 +30,7 @@ public class StudentAggregationDriver extends AbstractAggregationDriver {
         Map<String, Integer> gradeMapping = new Hashtable();
 
         StringBuffer sb = new StringBuffer();
-
+        
         while ((ch = in.read()) != -1) {
             if (ch != 13) {
                 sb.append((char) ch);
