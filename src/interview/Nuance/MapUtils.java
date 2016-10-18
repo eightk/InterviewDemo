@@ -6,7 +6,7 @@
 package interview.Nuance;
 
 import java.io.IOException;
-import java.io.Writer;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -26,16 +26,16 @@ public class MapUtils {
         return map;
     }
 
-    public static void writeResult(Map<String, Integer> map, Writer outputFile) throws IOException {
+    public static void writeResult(Map<String, Integer> map, OutputStream outputFile) throws IOException {
         Iterator<Map.Entry<String, Integer>> it = map.entrySet().iterator();
 
         while (it.hasNext()) {
             Map.Entry<String, Integer> entry = it.next();
 
-            outputFile.write(entry.getKey());
-            outputFile.write("\t");
-            outputFile.write(entry.getValue().toString());
-            outputFile.write("\n");
+            outputFile.write(entry.getKey().getBytes());
+            outputFile.write(9);
+            outputFile.write(entry.getValue().toString().getBytes());
+            outputFile.write(13);
         }
     }
 
