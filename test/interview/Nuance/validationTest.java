@@ -7,6 +7,7 @@ package interview.Nuance;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -15,22 +16,41 @@ import org.junit.Test;
  */
 public class validationTest {
 
-    @Test
-    public void testMatchPattern() {
-        String pattern = "(^[k-kK-K1-8]{1})(\\d{4})$";
-        String successTest1 = "k1234";
-        String successTest2 = "30000";
-        String successTest3 = "K0000";
-        String failedTest1 = "390000";//Too long
-        String failedTest2 = "a1456";//Invalid grade
-        String failedTest3 = "5145";//Too short
-
-        assertTrue(ValidationUtils.matchPattern(successTest1, pattern));
-        assertTrue(ValidationUtils.matchPattern(successTest2, pattern));
-        assertTrue(ValidationUtils.matchPattern(successTest3, pattern));
-        assertFalse(ValidationUtils.matchPattern(failedTest1, pattern));
-        assertFalse(ValidationUtils.matchPattern(failedTest2, pattern));
-        assertFalse(ValidationUtils.matchPattern(failedTest3, pattern));
+    @Before
+    public void init() {
+        pattern = "(^[k-kK-K1-8]{1})(\\d{4})$";
     }
+
+    @Test
+    public void testLowerCase() {
+        assertTrue(ValidationUtils.matchPattern("k1234", pattern));
+    }
+
+    @Test
+    public void testUpperCase() {
+        assertTrue(ValidationUtils.matchPattern("K0000", pattern));
+    }
+
+    @Test
+    public void testNumber() {
+        assertTrue(ValidationUtils.matchPattern("30000", pattern));
+    }
+
+    @Test
+    public void testTooLong() {
+        assertFalse(ValidationUtils.matchPattern("390000", pattern));
+    }
+
+    @Test
+    public void testTooShort() {
+        assertFalse(ValidationUtils.matchPattern("5145", pattern));
+    }
+
+    @Test
+    public void testInvalidStart() {
+        assertFalse(ValidationUtils.matchPattern("a1456", pattern));
+    }
+
+    private String pattern;
 
 }

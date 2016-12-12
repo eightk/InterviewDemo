@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class SortUtils {
 
     public static ArrayList<Integer> selectionSort(ArrayList<Integer> list, int startPos) {
+        int[] numbers = {1,1,2,3,4};
+        int size = numbers.length;
         int minPos = startPos;
         for (int i = startPos + 1; i < list.size(); i++) {
             if (list.get(i) < list.get(minPos)) {
